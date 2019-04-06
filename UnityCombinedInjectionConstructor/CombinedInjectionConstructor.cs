@@ -89,54 +89,18 @@ namespace UnityCombinedInjectionConstructor.Tests
 
         private ConstructorInfo FindConstructor(Type typeToCreate)
         {
-            /*
-            Unity.Injection
-            {
-        public static class InjectionMatching
-        {
-            #region Signature matching
-
-            public static bool MatchMemberInfo(this object[] data, MethodBase info)
-
-            */
-            //var matcher = new ParameterMatcher(_injectionParameterValues);
-            //var typeToCreateReflector = new Unity.Configuration.ReflectionHelper(typeToCreate);
             var instanceConstructors = typeToCreate.GetTypeInfo()
                 .DeclaredConstructors
-                .Where(c => c.IsStatic == false && c.IsPublic);;
+                .Where(c => c.IsStatic == false && c.IsPublic); ;
             ConstructorInfo constructorInfo = null;
-
             foreach (var ctor in instanceConstructors)
             {
-                if (Matches(_data, ctor.GetParameters()))
-                //if (Matches(_arguments, ctor.GetParameters()))
+                if (_data.MatchMemberInfo(ctor))
                 {
                     constructorInfo = ctor;
                 }
             }
-
             return constructorInfo;
-        }
-
-        //public virtual bool Matches(List<ParameterBase> parameterValues, IEnumerable<Type> candidate)
-        public virtual bool Matches(object[] parameterValues, IEnumerable<Type> candidate)
-        {
-            List<Type> typeList = new List<Type>(candidate);
-            if (parameterValues.Length != typeList.Count)
-                return false;
-            for (int index = 0; index < parameterValues.Length; ++index)
-            {
-                //if (!parameterValues[index].MatchesType(typeList[index]))
-                if (!((ParameterBase)(parameterValues[index])).ParameterType.MatchesType(typeList[index]))
-                    return false;
-            }
-            return true;
-        }
-
-        //public virtual bool Matches(List<ParameterBase> parameterValues, IEnumerable<ParameterInfo> candidate)
-        public virtual bool Matches(object[] parameterValues, IEnumerable<ParameterInfo> candidate)
-        {
-            return Matches(parameterValues, candidate.Select<ParameterInfo, Type>((Func<ParameterInfo, Type>)(pi => pi.ParameterType)));
         }
 
         private ConstructorInfo FindDefaultConstructor(Type mappedToType)

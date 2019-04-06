@@ -12,7 +12,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
     <PackageReference Include="Unity" Version="5.10.3" />
     <PackageReference Include="Unity.Configuration" Version="5.10.0" />
-    <PackageReference Include="Unity.Interception" Version="5.10.0" />
   </ItemGroup>
 
   <ItemGroup>
