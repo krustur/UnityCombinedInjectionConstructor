@@ -22,12 +22,6 @@ namespace UnityCombinedInjectionConstructor.Tests
         }
     }
 
-    public interface ISomeDependency { }
-    public class SomeDependency : ISomeDependency { }
-
-    public interface ISomeOtherDependency { }
-    public class SomeOtherDependency : ISomeOtherDependency { }
-
     [TestClass]
     public class CombinedInjectionConstructor_Resolve
     {

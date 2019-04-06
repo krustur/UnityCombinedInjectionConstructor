@@ -108,20 +108,20 @@ namespace UnityCombinedInjectionConstructor.Tests
             var constructorInfos = mappedToType.GetConstructors(BindingFlags.Instance | BindingFlags.Public);
 
             var constructors = constructorInfos
-                .Select(x => new
-                {
-                    Constructor = x,
-                    Length = x.GetParameters().Length
-                })
-                .OrderByDescending(x => x.Length)
+                //.Select(x => new
+                //{
+                //    Constructor = x,
+                //    Length = x.GetParameters().Length
+                //})
+                //.OrderByDescending(x => x.Length)
                 .ToList();
 
-            if (constructors.Count > 1 && constructors[0].Length == constructors[1].Length)
+            if (constructors.Count != 1)
             {
-                throw new InvalidOperationException("Multiple constructor with same number of paramters. Unable to determine which constructor to use");
+                throw new Exception($"Could not find unique constructor on type {mappedToType.Name}. Single constructor required for {nameof(UnityCombinedInjectionConstructor)}");
             }
 
-            return constructors.First().Constructor;
+            return constructors.First();
         }
     }
 
